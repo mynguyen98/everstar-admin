@@ -1,5 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToast } from 'src/features/uiSlice'
+import BasicToast from 'src/views/notifications/toasts/BasicToast'
+import { loginUser } from 'src/features/authSlice'
 import {
   CButton,
   CCard,
@@ -15,8 +20,39 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+// import { format } from 'core-js/core/date'
 
+const initialState = {
+  email: '',
+  password: '',
+}
 const Login = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [values, setValues] = useState(initialState)
+  const { isLoading, user } = useSelector((store) => store.auth)
+  const handleChange = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    setValues({ ...values, [name]: value })
+    console.log(values)
+  }
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  }, [user])
+  const onSubmit = (e) => {
+    e.preventDefault()
+    const { email, password } = values
+    if (!email || !password) {
+      dispatch(
+        addToast(BasicToast('#e55353', 'Login faild', 'Please check your email and password!')),
+      )
+      return
+    }
+    dispatch(loginUser({ email, password }))
+  }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -25,14 +61,22 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onSubmit={onSubmit}>
                     <h1>Login</h1>
                     <p className="text-medium-emphasis">Sign In to your account</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                      <CFormInput
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={values.email}
+                        autoComplete="username"
+                        onChange={handleChange}
+                        required
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -40,13 +84,28 @@ const Login = () => {
                       </CInputGroupText>
                       <CFormInput
                         type="password"
+                        name="password"
                         placeholder="Password"
+                        value={values.password}
                         autoComplete="current-password"
+                        onChange={handleChange}
+                        required
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton
+                          color="primary"
+                          className="px-4"
+                          type="submit"
+                          // onClick={() =>
+                          //   dispatch(
+                          //     addToast(
+                          //       BasicToast('#e55353', 'Login faild', 'Please fill all fields'),
+                          //     ),
+                          //   )
+                          // }
+                        >
                           Login
                         </CButton>
                       </CCol>
@@ -63,10 +122,7 @@ const Login = () => {
                 <CCardBody className="text-center">
                   <div>
                     <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
+                    <p>Create an account to keep track our work</p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
                         Register Now!
