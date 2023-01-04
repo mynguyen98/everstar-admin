@@ -1,0 +1,15 @@
+.profile-container {
+  .profile-heading {
+    display: flex;
+    align-items: center;
+  }
+  div .avatar-border {
+    border-radius: 50%;
+    padding: 4px;
+    border: 1px solid #9da5b1;
+    margin-right: 8px;
+  }
+}
+.form-padding {
+  margin-top: 2.4rem;
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
+  cilAlignLeft,
   cilBell,
   cilCalculator,
   cilChartPie,
@@ -24,6 +25,15 @@ const _nav = [
     badge: {
       color: 'info',
       text: 'NEW',
+    },
+  },
+  {
+    component: CNavItem,
+    name: 'Idols',
+    to: '/idols',
+    icon: <CIcon icon={cilAlignLeft} customClassName="nav-icon" />,
+    badge: {
+      color: 'info',
     },
   },
   {

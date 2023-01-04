@@ -1,2 +1,29 @@
 // Here you can add other styles
 $sidebar-brand-bg: rgba(188, 123, 179, 1);
+.padding-container {
+  padding-top: 24px;
+}
+.margin-container {
+  margin-top: 24px;
+}
+.everstar-color {
+  color: #81bde8;
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--cui-sidebar-bg);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #9da5b1;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #9da5b1;
+}
