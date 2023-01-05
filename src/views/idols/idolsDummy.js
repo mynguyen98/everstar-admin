@@ -7,6 +7,7 @@ import avatar6 from 'src/assets/images/avatars/6.jpg'
 
 const tableExample = [
   {
+    id: 1,
     avatar: { src: avatar1, status: 'success' },
     user: {
       title: 'actress',
@@ -24,6 +25,7 @@ const tableExample = [
     activity: '10 sec ago',
   },
   {
+    id: 2,
     avatar: { src: avatar2, status: 'danger' },
     user: {
       title: 'actress',
@@ -41,6 +43,7 @@ const tableExample = [
     activity: '5 minutes ago',
   },
   {
+    id: 3,
     avatar: { src: avatar3, status: 'warning' },
     user: {
       title: 'actress',
@@ -58,6 +61,7 @@ const tableExample = [
     activity: '1 hour ago',
   },
   {
+    id: 4,
     avatar: { src: avatar4, status: 'secondary' },
     user: {
       title: 'actress',
@@ -75,6 +79,7 @@ const tableExample = [
     activity: 'Last month',
   },
   {
+    id: 5,
     avatar: { src: avatar5, status: 'success' },
     user: {
       title: 'actress',
@@ -92,6 +97,7 @@ const tableExample = [
     activity: 'Last week',
   },
   {
+    id: 6,
     avatar: { src: avatar6, status: 'danger' },
     user: {
       title: 'actress',
@@ -109,6 +115,7 @@ const tableExample = [
     activity: 'Last week',
   },
   {
+    id: 7,
     avatar: { src: avatar3, status: 'warning' },
     user: {
       title: 'actress',
@@ -126,6 +133,7 @@ const tableExample = [
     activity: '1 hour ago',
   },
   {
+    id: 8,
     avatar: { src: avatar4, status: 'secondary' },
     user: {
       title: 'actress',
@@ -143,6 +151,7 @@ const tableExample = [
     activity: 'Last month',
   },
   {
+    id: 9,
     avatar: { src: avatar5, status: 'success' },
     user: {
       title: 'actress',
@@ -160,6 +169,7 @@ const tableExample = [
     activity: 'Last week',
   },
   {
+    id: 10,
     avatar: { src: avatar6, status: 'danger' },
     user: {
       title: 'actress',
@@ -177,6 +187,7 @@ const tableExample = [
     activity: 'Last week',
   },
   {
+    id: 11,
     avatar: { src: avatar5, status: 'success' },
     user: {
       title: 'actress',
@@ -194,6 +205,7 @@ const tableExample = [
     activity: 'Last week',
   },
   {
+    id: 12,
     avatar: { src: avatar6, status: 'danger' },
     user: {
       title: 'actress',
@@ -211,6 +223,7 @@ const tableExample = [
     activity: 'Last week',
   },
   {
+    id: 13,
     avatar: { src: avatar3, status: 'warning' },
     user: {
       title: 'actress',
@@ -228,6 +241,7 @@ const tableExample = [
     activity: '1 hour ago',
   },
   {
+    id: 14,
     avatar: { src: avatar4, status: 'secondary' },
     user: {
       title: 'actress',
@@ -245,6 +259,7 @@ const tableExample = [
     activity: 'Last month',
   },
   {
+    id: 15,
     avatar: { src: avatar5, status: 'success' },
     user: {
       title: 'actress',
@@ -262,6 +277,7 @@ const tableExample = [
     activity: 'Last week',
   },
   {
+    id: 16,
     avatar: { src: avatar6, status: 'danger' },
     user: {
       title: 'actress',

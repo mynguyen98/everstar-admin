@@ -15,3 +15,19 @@ export const getUserFromLocalStorage = () => {
   const user = result ? JSON.parse(result) : null
   return user
 }
+
+// get access token
+export const getLocalAccessToken = () => {
+  const user = getUserFromLocalStorage()
+  return user.tokens.accessToken
+}
+export const getLocalRefreshToken = () => {
+  const user = getUserFromLocalStorage()
+  return user.tokens.refreshToken
+}
+
+export const updateLocalAccessToken = (newAccessToken) => {
+  const user = getUserFromLocalStorage()
+  user.tokens.accessToken = newAccessToken
+  addUserToLocalStorage(user)
+}

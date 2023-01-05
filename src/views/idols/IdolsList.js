@@ -1,38 +1,27 @@
 import React from 'react'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import SweetPagination from 'sweetpagination'
 import ModalsContainer from '../notifications/modals/ModalsContainer'
 import EditIdolForm from './EditIdolForm'
+import idolSlice, { setEditIdol } from 'src/features/idol/idolSlice'
 import {
   CAvatar,
   CButton,
-  CButtonGroup,
   CCard,
   CCardBody,
-  CCardFooter,
-  CCardHeader,
-  CCol,
-  CProgress,
-  CRow,
   CTable,
   CTableBody,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-  CPagination,
-  CPaginationItem,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPeople } from '@coreui/icons'
-import avatar1 from 'src/assets/images/avatars/1.jpg'
-import avatar2 from 'src/assets/images/avatars/2.jpg'
-import avatar3 from 'src/assets/images/avatars/3.jpg'
-import avatar4 from 'src/assets/images/avatars/4.jpg'
-import avatar5 from 'src/assets/images/avatars/5.jpg'
-import avatar6 from 'src/assets/images/avatars/6.jpg'
 import tableExample from './idolsDummy'
 const IdolsList = () => {
+  const dispatch = useDispatch()
   const [currentPageData, setCurrentPageData] = useState([])
   const [visible, setVisible] = useState(false)
   const items = tableExample
@@ -83,7 +72,23 @@ const IdolsList = () => {
                   <CTableDataCell className="text-center">{item.price}</CTableDataCell>
                   <CTableDataCell>
                     <div className="text-center">
-                      <CButton color="danger" size="sm" onClick={() => setVisible(true)}>
+                      <CButton
+                        color="danger"
+                        size="sm"
+                        onClick={() => {
+                          setVisible(true)
+                          dispatch(
+                            setEditIdol({
+                              name: item.user.name,
+                              email: 'canhmy1998@gmail.com',
+                              title: item.user.title,
+                              country: item.country.name,
+                              price: item.price,
+                              address: 'abc district, cde city',
+                            }),
+                          )
+                        }}
+                      >
                         Edit
                       </CButton>
                     </div>

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToast } from 'src/features/uiSlice'
 import BasicToast from 'src/views/notifications/toasts/BasicToast'
-import { loginUser } from 'src/features/authSlice'
+import { loginUser } from 'src/features/auth/authSlice'
 import {
   CButton,
   CCard,

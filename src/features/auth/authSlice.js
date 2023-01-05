@@ -1,6 +1,6 @@
 import customFetch from 'src/utils/axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { addToast } from './uiSlice'
+import { addToast } from '../uiSlice'
 import BasicToast from 'src/views/notifications/toasts/BasicToast'
 import { getUserFromLocalStorage, addUserToLocalStorage } from 'src/utils/localStorage'
 const initialState = {
@@ -8,14 +8,6 @@ const initialState = {
   user: getUserFromLocalStorage(),
 }
 
-export const signupUser = createAsyncThunk('auth/signupUser', async (user, thunkAPI) => {
-  try {
-    const resp = await customFetch.post('/signup/basic', user)
-    console.log(resp.data)
-  } catch (error) {
-    console.log(error)
-  }
-})
 export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAPI) => {
   try {
     const resp = await customFetch.post('/login/basic', user)
@@ -33,6 +25,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAP
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {},
   extraReducers: {
     [loginUser.pending]: (state) => {
       state.isLoading = true

@@ -1,5 +1,5 @@
 import React from 'react'
-import { signupUser } from 'src/features/authSlice'
+import { signupUser } from 'src/features/user/userSlice'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -24,6 +24,7 @@ const initialState = {
   password: '',
   profilePicUrl: null,
   repeatPw: '',
+  isEdit: false,
 }
 
 const Register = () => {
