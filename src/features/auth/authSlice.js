@@ -7,7 +7,6 @@ const initialState = {
   isLoading: false,
   user: getUserFromLocalStorage(),
 }
-
 export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAPI) => {
   try {
     const resp = await customFetch.post('/login/basic', user)
@@ -22,10 +21,36 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAP
   }
 })
 
+export const profileUser = createAsyncThunk('auth/profileUser', async (_, thunkAPI) => {
+  try {
+    const resp = await customFetch.get('/profile/my')
+    console.log(resp)
+    return resp.data
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+export const updateProfile = createAsyncThunk('auth/updateProfile', async (user, thunkAPI) => {
+  try {
+    const resp = await customFetch.put('/profile', user)
+    return resp.data
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    refreshToken: (state, { payload }) => {
+      state.user.tokens.accessToken = payload
+    },
+    // updateProfile: (state, { payload }) => {
+    //   state.user.user = { ...state.user.user, ...payload }
+    // },
+  },
   extraReducers: {
     [loginUser.pending]: (state) => {
       state.isLoading = true
@@ -34,14 +59,28 @@ const authSlice = createSlice({
       state.isLoading = false
       console.log(action)
       const { data } = action.payload
-      console.log(data)
       state.user = data
       addUserToLocalStorage(data)
     },
     [loginUser.pending]: (state) => {
       state.isLoading = true
     },
+    [profileUser.pending]: (state) => {
+      state.isLoading = true
+    },
+    [profileUser.fulfilled]: (state, { payload }) => {
+      console.log(payload)
+      state.isLoading = false
+    },
+    [updateProfile.pending]: (state) => {
+      state.isLoading = true
+    },
+    [updateProfile.fulfilled]: (state, { payload }) => {
+      state.isLoading = false
+      state.user.user = { ...payload.data }
+      addUserToLocalStorage(state.user)
+    },
   },
 })
-
+export const { refreshToken } = authSlice.actions
 export default authSlice.reducer

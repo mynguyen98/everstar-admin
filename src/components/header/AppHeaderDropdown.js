@@ -21,10 +21,11 @@ import {
   cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-
 import avatar8 from './../../assets/images/avatars/8.jpg'
-
+import { profileUser } from 'src/features/auth/authSlice'
+import { useDispatch } from 'react-redux'
 const AppHeaderDropdown = () => {
+  const dispatch = useDispatch()
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -61,7 +62,7 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
-        <CDropdownItem href="#/profile">
+        <CDropdownItem href="#/profile" onClick={() => dispatch(profileUser())}>
           <CIcon icon={cilUser} className="me-2" />
           Profile
         </CDropdownItem>
