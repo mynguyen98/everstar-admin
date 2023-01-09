@@ -118,9 +118,9 @@ const Paginations = () => {
             <DocsExample href="components/pagination#sizing">
               <CPagination size="lg" aria-label="Page navigation example">
                 <CPaginationItem>Previous</CPaginationItem>
-                <CPaginationItem>1</CPaginationItem>
+                {/* <CPaginationItem>1</CPaginationItem>
                 <CPaginationItem>2</CPaginationItem>
-                <CPaginationItem>3</CPaginationItem>
+                <CPaginationItem>3</CPaginationItem> */}
                 <CPaginationItem>Next</CPaginationItem>
               </CPagination>
             </DocsExample>

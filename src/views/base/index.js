@@ -12,7 +12,6 @@ import Popovers from './Popovers'
 import ProgressBar from './ProgressBar'
 import Tabs from './Tabs'
 import Tooltips from './Tooltips'
-
 export {
   Breadcrumbs,
   Cards,

@@ -45,16 +45,16 @@ const Profile = () => {
       <CCard className="profile-container">
         <CCardBody>
           <CRow className="profile-heading">
-            <CCol sm={1}>
+            {/* <CCol>
+            </CCol> */}
+            {/* <CCol> */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+              <CAvatar size="xl" src={profilePicUrl} className="avatar-border" />
               <div>
-                <CAvatar size="xl" src={profilePicUrl} className="avatar-border" />
+                <div>{name}</div>
+                <div>role: {roles[0].code}</div>
               </div>
-            </CCol>
-            <CCol>
-              <div>{name}</div>
-              {/* <div>mynguyen@gmail.com</div> */}
-              <div>role: {roles[0].code}</div>
-            </CCol>
+            </div>
           </CRow>
         </CCardBody>
       </CCard>

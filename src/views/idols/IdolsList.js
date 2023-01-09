@@ -52,7 +52,6 @@ const IdolsList = () => {
                   <CTableDataCell>
                     <div>{item.user.name}</div>
                     <div className="small text-medium-emphasis">
-                      {/* <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '} */}
                       Registered:{item.user.registered}
                     </div>
                   </CTableDataCell>
@@ -107,7 +106,7 @@ const IdolsList = () => {
             </CPagination> */}
             <SweetPagination
               currentPageData={setCurrentPageData}
-              dataPerPage={10}
+              dataPerPage={3}
               getData={items}
               navigation={true}
               getStyle="style-2"

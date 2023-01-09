@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import {
   CAvatar,
   CBadge,
@@ -25,11 +26,14 @@ import avatar8 from './../../assets/images/avatars/8.jpg'
 import { profileUser } from 'src/features/auth/authSlice'
 import { useDispatch } from 'react-redux'
 const AppHeaderDropdown = () => {
+  const { profilePicUrl } = useSelector((store) => {
+    return store.auth.user.user
+  })
   const dispatch = useDispatch()
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <CAvatar src={avatar8} size="md" />
+        <CAvatar src={profilePicUrl} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
