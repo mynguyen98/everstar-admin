@@ -9,6 +9,8 @@ import { handleChangeInput, clearFields } from 'src/features/user/userSlice'
 import { usersList, updateCurrentPage } from 'src/features/users/usersSlice'
 import Pagination from 'react-pagination-js'
 import 'react-pagination-js/dist/styles.css' // import css
+import StatusEditModal from './StatusEditModal'
+import { showModal } from 'src/features/uiSlice'
 import {
   CCard,
   CCardBody,
@@ -44,6 +46,7 @@ const Users = () => {
 
   // Handle pagination
   const { users, currentPage, totalSize, sizePerPage } = useSelector((store) => store.users)
+  console.log(totalSize)
 
   const changeCurrentPage = (numPage) => {
     dispatch(updateCurrentPage(numPage))
@@ -183,11 +186,12 @@ const Users = () => {
                 <CTableHeaderCell className="text-center">Role</CTableHeaderCell>
                 {/* <CTableHeaderCell>Country</CTableHeaderCell>
                 <CTableHeaderCell className="text-center">Price</CTableHeaderCell> */}
+                <CTableHeaderCell className="text-center">status</CTableHeaderCell>
                 <CTableHeaderCell className="text-center">More</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {users.map((user, index) => (
+              {users?.map((user, index) => (
                 <CTableRow v-for="item in tableItems" key={index}>
                   <CTableDataCell className="text-center">
                     <CAvatar size="md" src={user.profilePicUrl} status={user.status} />
@@ -197,6 +201,22 @@ const Users = () => {
                     <div className="small text-medium-emphasis">{user.email}</div>
                   </CTableDataCell>
                   <CTableDataCell className="text-center">{user.roles[0].code}</CTableDataCell>
+                  <CTableDataCell className="text-center">
+                    <CButton
+                      color={user.status ? 'danger' : 'success'}
+                      size="sm"
+                      onClick={() =>
+                        dispatch(
+                          showModal({
+                            title: 'Confirmation',
+                            modalContent: <StatusEditModal id={user._id} />,
+                          }),
+                        )
+                      }
+                    >
+                      {user.status ? 'Block User' : 'Active User'}
+                    </CButton>
+                  </CTableDataCell>
                   {/* <CTableDataCell>
                     <div>{item.country.name}</div>
                   </CTableDataCell>

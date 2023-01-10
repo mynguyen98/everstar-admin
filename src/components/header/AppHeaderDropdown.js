@@ -23,7 +23,7 @@ import {
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import avatar8 from './../../assets/images/avatars/8.jpg'
-import { profileUser } from 'src/features/auth/authSlice'
+import { profileUser, logoutUser } from 'src/features/auth/authSlice'
 import { useDispatch } from 'react-redux'
 const AppHeaderDropdown = () => {
   const { profilePicUrl } = useSelector((store) => {
@@ -36,7 +36,7 @@ const AppHeaderDropdown = () => {
         <CAvatar src={profilePicUrl} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
-        <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
+        {/* <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
         <CDropdownItem href="#">
           <CIcon icon={cilBell} className="me-2" />
           Updates
@@ -64,13 +64,13 @@ const AppHeaderDropdown = () => {
           <CBadge color="warning" className="ms-2">
             42
           </CBadge>
-        </CDropdownItem>
+        </CDropdownItem> */}
         <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
         <CDropdownItem href="#/profile" onClick={() => dispatch(profileUser())}>
           <CIcon icon={cilUser} className="me-2" />
           Profile
         </CDropdownItem>
-        <CDropdownItem href="#">
+        {/* <CDropdownItem href="#">
           <CIcon icon={cilSettings} className="me-2" />
           Settings
         </CDropdownItem>
@@ -87,11 +87,11 @@ const AppHeaderDropdown = () => {
           <CBadge color="primary" className="ms-2">
             42
           </CBadge>
-        </CDropdownItem>
+        </CDropdownItem> */}
         <CDropdownDivider />
-        <CDropdownItem href="#">
+        <CDropdownItem onClick={() => dispatch(logoutUser())} style={{ cursor: 'pointer' }}>
           <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+          Logout
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

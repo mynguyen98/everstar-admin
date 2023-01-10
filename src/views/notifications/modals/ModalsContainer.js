@@ -1,20 +1,22 @@
 import { useState } from 'react'
+import { closeModal } from 'src/features/uiSlice'
+import { useDispatch } from 'react-redux'
 import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CButton } from '@coreui/react'
-const ModalsContainer = ({ visible, setVisible, modalContent, title }) => {
+const ModalsContainer = ({ visible, modalContent, title, size }) => {
+  const dispatch = useDispatch()
   return (
     <>
       {/* <CButton onClick={() => setVisible(!visible)}>Vertically centered modal</CButton> */}
-      <CModal size="xl" alignment="center" visible={visible} onClose={() => setVisible(false)}>
+      <CModal
+        size={size}
+        alignment="center"
+        visible={visible}
+        onClose={() => dispatch(closeModal())}
+      >
         <CModalHeader>
           <CModalTitle>{title}</CModalTitle>
         </CModalHeader>
         <CModalBody>{modalContent}</CModalBody>
-        <CModalFooter>
-          <CButton color="secondary" onClick={() => setVisible(false)}>
-            Close
-          </CButton>
-          <CButton color="primary">Save changes</CButton>
-        </CModalFooter>
       </CModal>
     </>
   )

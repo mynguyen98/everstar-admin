@@ -23,25 +23,26 @@ customFetch.interceptors.response.use(
   async (err) => {
     const originalConfig = err.config
 
-    // if (originalConfig.url !== '/signup/basic' && err.response) {
-    //   // Access Token was expired
-    //   console.log()
-    if (err.response.status === 401 && !originalConfig._retry) {
-      originalConfig._retry = true
-      console.log(originalConfig._retry)
-      try {
-        const refreshToken = { refreshToken: getLocalRefreshToken() }
-        console.log(refreshToken)
-        const rs = await customFetch.post('/token/refresh', refreshToken)
-        console.log(rs)
-        const { accessToken } = rs.data
-        updateLocalAccessToken(accessToken)
-        return customFetch(originalConfig)
-      } catch (_error) {
-        return Promise.reject(_error)
+    if (originalConfig.url !== '/signup/basic' && err.response) {
+      //   // Access Token was expired
+      //   console.log()
+      console.log(err.response.status === 401 && !originalConfig._retry)
+      if (err.response.status === 401 && !originalConfig._retry) {
+        originalConfig._retry = true
+        console.log(originalConfig._retry)
+        try {
+          const refreshToken = { refreshToken: getLocalRefreshToken() }
+          console.log(refreshToken)
+          const rs = await customFetch.post('/token/refresh', refreshToken)
+          console.log(rs)
+          const { accessToken } = rs.data
+          updateLocalAccessToken(accessToken)
+          return customFetch(originalConfig)
+        } catch (_error) {
+          return Promise.reject(_error)
+        }
       }
     }
-    // }
     console.log(err)
     console.log(originalConfig)
 

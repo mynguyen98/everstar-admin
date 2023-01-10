@@ -1,8 +1,10 @@
 import React, { Component, Suspense } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute'
 import './scss/style.scss'
 import { CToaster } from '@coreui/react'
 import { useSelector } from 'react-redux'
+import ModalsContainer from './views/notifications/modals/ModalsContainer'
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
@@ -21,7 +23,8 @@ const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 // class App extends Component {
 // render() {
 const App = () => {
-  const toast = useSelector((state) => state.ui.toast)
+  const { toast, modal } = useSelector((state) => state.ui)
+  const { visible, modalContent, title } = modal
   return (
     <HashRouter>
       <Suspense fallback={loading}>
@@ -31,9 +34,20 @@ const App = () => {
           <Route exact path="/register" name="Register Page" element={<Register />} />
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/500" name="Page 500" element={<Page500 />} />
-          <Route path="*" name="Home" element={<DefaultLayout />} />
+          <Route
+            path="*"
+            name="Home"
+            element={
+              <ProtectedRoute>
+                <DefaultLayout />
+              </ProtectedRoute>
+            }
+          >
+            {/* <Route index element={<DefaultLayout />} /> */}
+          </Route>
         </Routes>
         <CToaster push={toast} placement="top-end" />
+        <ModalsContainer visible={visible} modalContent={modalContent} title={title} />
       </Suspense>
     </HashRouter>
   )

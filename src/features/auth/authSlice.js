@@ -2,7 +2,11 @@ import customFetch from 'src/utils/axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { addToast } from '../uiSlice'
 import BasicToast from 'src/views/notifications/toasts/BasicToast'
-import { getUserFromLocalStorage, addUserToLocalStorage } from 'src/utils/localStorage'
+import {
+  getUserFromLocalStorage,
+  addUserToLocalStorage,
+  removeUserFromLocalStorage,
+} from 'src/utils/localStorage'
 const initialState = {
   isLoading: false,
   user: getUserFromLocalStorage(),
@@ -15,9 +19,19 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAP
   } catch (error) {
     console.log(error)
     thunkAPI.dispatch(
-      addToast(BasicToast('#e55353', 'Login faild', 'Please check your email and password!')),
+      addToast(BasicToast('#e55353', 'Login faild', 'Please check your email or password!')),
     )
-    thunkAPI.rejectWithValue()
+    return thunkAPI.rejectWithValue()
+  }
+})
+
+export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, thunkAPI) => {
+  try {
+    await customFetch.delete('/logout')
+    thunkAPI.dispatch(addToast(BasicToast('#2eb85c', 'Logout success')))
+  } catch (error) {
+    console.log(error)
+    thunkAPI.dispatch(addToast(BasicToast('#e55353', 'Logout failed', 'Please try again')))
   }
 })
 
@@ -64,6 +78,14 @@ const authSlice = createSlice({
     },
     [loginUser.pending]: (state) => {
       state.isLoading = true
+    },
+    [logoutUser.pending]: (state) => {
+      state.isLoading = true
+    },
+    [logoutUser.fulfilled]: (state) => {
+      state.isLoading = false
+      state.user = null
+      removeUserFromLocalStorage()
     },
     [profileUser.pending]: (state) => {
       state.isLoading = true

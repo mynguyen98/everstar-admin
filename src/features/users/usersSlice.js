@@ -1,7 +1,9 @@
 import customFetch from 'src/utils/axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-
+import { addToast } from '../uiSlice'
+import BasicToast from 'src/views/notifications/toasts/BasicToast'
 const initialState = {
+  user: null,
   users: [],
   currentPage: 1,
   totalSize: 10,
@@ -21,9 +23,24 @@ export const usersList = createAsyncThunk(
         thunkAPI.dispatch(updateTotalSize('update'))
       }
       if (users.length < sizePerPage) {
+        console.log(users.length)
         thunkAPI.dispatch(updateTotalSize('truncate'))
       }
       return users
+    } catch (error) {
+      console.log(error)
+    }
+  },
+)
+
+export const toggleUsersStatus = createAsyncThunk(
+  'users/toggleUsersStatus',
+  async (id, thunkAPI) => {
+    try {
+      console.log(id)
+      await customFetch.patch(`/users/status/:${id}`)
+      thunkAPI.dispatch(setUserStatus(id))
+      thunkAPI.dispatch(addToast(BasicToast('#2eb85c', 'you blocked this user successfully')))
     } catch (error) {
       console.log(error)
     }
@@ -45,6 +62,13 @@ const usersSlice = createSlice({
         state.totalSize = state.sizePerPage * state.currentPage
       }
     },
+    setUserStatus: (state, { payload }) => {
+      state.users.forEach((user) => {
+        if (user._id === payload) {
+          user.status = !user.status
+        }
+      })
+    },
   },
   extraReducers: {
     [usersList.pending]: (state) => {
@@ -56,5 +80,5 @@ const usersSlice = createSlice({
     },
   },
 })
-export const { updateCurrentPage, updateTotalSize } = usersSlice.actions
+export const { updateCurrentPage, updateTotalSize, setUserStatus } = usersSlice.actions
 export default usersSlice.reducer

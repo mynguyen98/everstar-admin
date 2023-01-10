@@ -2,7 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import SweetPagination from 'sweetpagination'
-import ModalsContainer from '../notifications/modals/ModalsContainer'
+// import ModalsContainer from '../notifications/modals/ModalsContainer'
+import { showModal } from 'src/features/uiSlice'
 import EditIdolForm from './EditIdolForm'
 import idolSlice, { setEditIdol } from 'src/features/idol/idolSlice'
 import {
@@ -23,7 +24,6 @@ import tableExample from './idolsDummy'
 const IdolsList = () => {
   const dispatch = useDispatch()
   const [currentPageData, setCurrentPageData] = useState([])
-  const [visible, setVisible] = useState(false)
   const items = tableExample
   return (
     <div className="margin-container">
@@ -75,7 +75,13 @@ const IdolsList = () => {
                         color="danger"
                         size="sm"
                         onClick={() => {
-                          setVisible(true)
+                          dispatch(
+                            showModal({
+                              title: 'Edit Idol information',
+                              modalContent: <EditIdolForm />,
+                              size: 'xl',
+                            }),
+                          )
                           dispatch(
                             setEditIdol({
                               name: item.user.name,
@@ -114,12 +120,12 @@ const IdolsList = () => {
           </div>
         </CCardBody>
       </CCard>
-      <ModalsContainer
+      {/* <ModalsContainer
         visible={visible}
         setVisible={setVisible}
         modalContent={<EditIdolForm />}
         title={'Edit Idol information'}
-      />
+      /> */}
     </div>
   )
 }
