@@ -31,7 +31,7 @@ const AppHeaderDropdown = () => {
   })
   const dispatch = useDispatch()
   return (
-    <CDropdown variant="nav-item">
+    <CDropdown variant="nav-item" style={{ listStyleType: 'none' }}>
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
         <CAvatar src={profilePicUrl} size="md" />
       </CDropdownToggle>

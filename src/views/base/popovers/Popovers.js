@@ -15,7 +15,7 @@ const Popovers = () => {
               <CPopover
                 title="Popover title"
                 content="And here’s some amazing content. It’s very engaging. Right?"
-                placement="right"
+                placement="left"
               >
                 <CButton color="danger" size="lg">
                   Click to toggle popover

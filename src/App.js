@@ -24,7 +24,7 @@ const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 // render() {
 const App = () => {
   const { toast, modal } = useSelector((state) => state.ui)
-  const { visible, modalContent, title } = modal
+  const { visible, modalContent, title, size } = modal
   return (
     <HashRouter>
       <Suspense fallback={loading}>
@@ -47,7 +47,7 @@ const App = () => {
           </Route>
         </Routes>
         <CToaster push={toast} placement="top-end" />
-        <ModalsContainer visible={visible} modalContent={modalContent} title={title} />
+        <ModalsContainer visible={visible} modalContent={modalContent} title={title} size={size} />
       </Suspense>
     </HashRouter>
   )

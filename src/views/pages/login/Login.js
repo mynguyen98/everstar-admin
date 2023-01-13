@@ -35,7 +35,6 @@ const Login = () => {
     const name = e.target.name
     const value = e.target.value
     setValues({ ...values, [name]: value })
-    console.log(values)
   }
   useEffect(() => {
     if (user) {
@@ -121,13 +120,13 @@ const Login = () => {
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
-                    <p>Create an account to keep track our work</p>
-                    <Link to="/register">
+                    <h2>Wellcome</h2>
+                    <p>to Everstar Global admin</p>
+                    {/* <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
                         Register Now!
                       </CButton>
-                    </Link>
+                    </Link> */}
                   </div>
                 </CCardBody>
               </CCard>

@@ -6,30 +6,34 @@ const initialState = {
   user: null,
   users: [],
   currentPage: 1,
-  totalSize: 10,
-  sizePerPage: 2,
+  totalSize: 12,
+  sizePerPage: 4,
+  addMorePage: true,
   isLoading: false,
 }
 
 export const usersList = createAsyncThunk(
   'users/usersList',
-  async ({ type, limit, offset }, thunkAPI) => {
+  async ({ type, name, limit, offset }, thunkAPI) => {
     try {
-      const response = await customFetch.get(`/${type}?limit=${limit}&offset=${offset}`)
-      console.log(thunkAPI.getState())
-      const { currentPage, totalSize, sizePerPage } = thunkAPI.getState().users
+      const response = await customFetch.get(
+        `/${type}?search=${name}&limit=${limit}&offset=${offset}`,
+      )
+      const { addMorePage, currentPage, totalSize, sizePerPage } = thunkAPI.getState().users
       const users = response.data.data
-      if (totalSize / sizePerPage === currentPage && users.length === sizePerPage) {
+      if (addMorePage && totalSize / sizePerPage === currentPage && users.length === sizePerPage) {
         thunkAPI.dispatch(updateTotalSize('update'))
       }
       if (users.length < sizePerPage) {
-        console.log(users.length)
         thunkAPI.dispatch(updateTotalSize('truncate'))
+        // if there is no user, not add more page anymore and reduce one page
+        if (users.length === 0) {
+          thunkAPI.dispatch(setAddMMorePage(false))
+          thunkAPI.dispatch(updateTotalSize('reduce'))
+        }
       }
       return users
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   },
 )
 
@@ -37,12 +41,29 @@ export const toggleUsersStatus = createAsyncThunk(
   'users/toggleUsersStatus',
   async (id, thunkAPI) => {
     try {
-      console.log(id)
-      await customFetch.patch(`/users/status/:${id}`)
+      await customFetch.patch(`/users/status/${id}`)
       thunkAPI.dispatch(setUserStatus(id))
       thunkAPI.dispatch(addToast(BasicToast('#2eb85c', 'you blocked this user successfully')))
+    } catch (error) {}
+  },
+)
+
+export const updateUsersPw = createAsyncThunk(
+  'users/updateUsersStatus',
+  async ({ id, password }, thunkAPI) => {
+    try {
+      await customFetch.patch(`/users/set-password/${id}`, { password })
+      thunkAPI.dispatch(addToast(BasicToast('#2eb85c', 'Update user password successfully')))
     } catch (error) {
-      console.log(error)
+      thunkAPI.dispatch(
+        addToast(
+          BasicToast(
+            '#e55353',
+            'Update password failed',
+            'May be there is trouble with internet, please wait a second and try again',
+          ),
+        ),
+      )
     }
   },
 )
@@ -61,6 +82,10 @@ const usersSlice = createSlice({
       if (payload === 'truncate') {
         state.totalSize = state.sizePerPage * state.currentPage
       }
+      if (payload === 'reduce') {
+        state.totalSize = state.totalSize - state.sizePerPage
+        state.currentPage = state.currentPage - 1
+      }
     },
     setUserStatus: (state, { payload }) => {
       state.users.forEach((user) => {
@@ -68,6 +93,9 @@ const usersSlice = createSlice({
           user.status = !user.status
         }
       })
+    },
+    setAddMMorePage: (state, { payload }) => {
+      state.addMorePage = payload
     },
   },
   extraReducers: {
@@ -80,5 +108,6 @@ const usersSlice = createSlice({
     },
   },
 })
-export const { updateCurrentPage, updateTotalSize, setUserStatus } = usersSlice.actions
+export const { updateCurrentPage, updateTotalSize, setUserStatus, setAddMMorePage } =
+  usersSlice.actions
 export default usersSlice.reducer

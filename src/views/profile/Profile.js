@@ -12,16 +12,12 @@ import {
   CFormInput,
   CButton,
 } from '@coreui/react'
-import avatar2 from 'src/assets/images/avatars/2.jpg'
-import avatar1 from 'src/assets/images/avatars/1.jpg'
 
 const Profile = () => {
   const dispatch = useDispatch()
   const { user } = useSelector((store) => {
-    console.log(store.auth)
     return store.auth.user
   })
-  console.log(user)
   const { name, profilePicUrl, roles } = user
   const [values, setValues] = useState({ name, profilePicUrl: '' })
 

@@ -13,7 +13,7 @@ import {
   CNavItem,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
+import { cilMenu } from '@coreui/icons'
 
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
@@ -21,8 +21,8 @@ import { logo } from 'src/assets/brand/logo'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector((state) => state.ui.sidebarShow)
-  console.log(sidebarShow)
+  // const sidebarShow = useSelector((state) => state.ui.sidebarShow)
+  const { headerNav } = useSelector((state) => state.auth.decentralized)
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
@@ -38,9 +38,16 @@ const AppHeader = () => {
               Dashboard
             </CNavLink>
           </CNavItem>
-          <CNavItem>
+          {headerNav?.map((nav, index) => {
+            return (
+              <CNavItem key={index}>
+                <CNavLink href={nav.link}>{nav.name}</CNavLink>
+              </CNavItem>
+            )
+          })}
+          {/* <CNavItem>
             <CNavLink href="#/users">Users</CNavLink>
-          </CNavItem>
+          </CNavItem> */}
           {/* <CNavItem>
             <CNavLink href="#">Settings</CNavLink>
           </CNavItem> */}

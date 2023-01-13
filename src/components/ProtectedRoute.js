@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 
 const ProtectedRoute = ({ children }) => {
   const user = useSelector((store) => store.auth.user)
-  console.log(user)
   if (!user) {
     return <Navigate to="/login" />
   }

@@ -30,3 +30,26 @@ $sidebar-brand-bg: rgba(188, 123, 179, 1);
 ::-webkit-scrollbar-thumb:hover {
   background: #9da5b1;
 }
+
+// .menu-popup {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+// }
+.options-menu {
+  position: relative;
+}
+.menu-popup {
+  position: absolute;
+  top: 0;
+  right: 3rem;
+}
+.row-align {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.margin-left {
+  margin-right: 10px;
+}

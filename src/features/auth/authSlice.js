@@ -7,20 +7,22 @@ import {
   addUserToLocalStorage,
   removeUserFromLocalStorage,
 } from 'src/utils/localStorage'
+import { decentralizeNav } from 'src/utils/decentralizeNav'
+const role = getUserFromLocalStorage()?.user.roles[0].code
 const initialState = {
   isLoading: false,
   user: getUserFromLocalStorage(),
+  decentralized: decentralizeNav[role],
 }
 export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAPI) => {
   try {
     const resp = await customFetch.post('/login/basic', user)
-    console.log(resp.data.data)
+    thunkAPI.dispatch(decentralizeUser(resp.data.data.user.roles[0].code))
     return resp.data
   } catch (error) {
-    console.log(error)
-    thunkAPI.dispatch(
-      addToast(BasicToast('#e55353', 'Login faild', 'Please check your email or password!')),
-    )
+    const wrongPass = error.response.status === 400 ? true : false
+    const message = wrongPass ? 'Please check your email and password' : error.message
+    thunkAPI.dispatch(addToast(BasicToast('#e55353', 'Login faild', message)))
     return thunkAPI.rejectWithValue()
   }
 })
@@ -30,7 +32,6 @@ export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, thunkAPI
     await customFetch.delete('/logout')
     thunkAPI.dispatch(addToast(BasicToast('#2eb85c', 'Logout success')))
   } catch (error) {
-    console.log(error)
     thunkAPI.dispatch(addToast(BasicToast('#e55353', 'Logout failed', 'Please try again')))
   }
 })
@@ -38,20 +39,15 @@ export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, thunkAPI
 export const profileUser = createAsyncThunk('auth/profileUser', async (_, thunkAPI) => {
   try {
     const resp = await customFetch.get('/profile/my')
-    console.log(resp)
     return resp.data
-  } catch (error) {
-    console.log(error)
-  }
+  } catch (error) {}
 })
 
 export const updateProfile = createAsyncThunk('auth/updateProfile', async (user, thunkAPI) => {
   try {
     const resp = await customFetch.put('/profile', user)
     return resp.data
-  } catch (error) {
-    console.log(error)
-  }
+  } catch (error) {}
 })
 
 const authSlice = createSlice({
@@ -61,9 +57,9 @@ const authSlice = createSlice({
     refreshToken: (state, { payload }) => {
       state.user.tokens.accessToken = payload
     },
-    // updateProfile: (state, { payload }) => {
-    //   state.user.user = { ...state.user.user, ...payload }
-    // },
+    decentralizeUser: (state, { payload }) => {
+      state.decentralized = decentralizeNav[payload]
+    },
   },
   extraReducers: {
     [loginUser.pending]: (state) => {
@@ -71,7 +67,6 @@ const authSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, action) => {
       state.isLoading = false
-      console.log(action)
       const { data } = action.payload
       state.user = data
       addUserToLocalStorage(data)
@@ -91,7 +86,6 @@ const authSlice = createSlice({
       state.isLoading = true
     },
     [profileUser.fulfilled]: (state, { payload }) => {
-      console.log(payload)
       state.isLoading = false
     },
     [updateProfile.pending]: (state) => {
@@ -104,5 +98,5 @@ const authSlice = createSlice({
     },
   },
 })
-export const { refreshToken } = authSlice.actions
+export const { refreshToken, decentralizeUser } = authSlice.actions
 export default authSlice.reducer

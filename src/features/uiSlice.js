@@ -9,12 +9,19 @@ const initialState = {
     title: '',
     size: '',
   },
+  showMenu: false,
 }
 
 const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
+    setToggleMenu: (state) => {
+      state.showMenu = !state.showMenu
+    },
+    setCloseMenu: (state) => {
+      state.showMenu = false
+    },
     addToast: (state, action) => {
       state.toast = action.payload
     },
@@ -34,5 +41,6 @@ const uiSlice = createSlice({
   },
 })
 
-export const { addToast, toggleSidebar, showModal, closeModal } = uiSlice.actions
+export const { addToast, toggleSidebar, showModal, closeModal, setCloseMenu, setToggleMenu } =
+  uiSlice.actions
 export default uiSlice.reducer

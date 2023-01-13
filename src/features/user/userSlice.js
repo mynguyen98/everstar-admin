@@ -2,7 +2,7 @@ import customFetch from 'src/utils/axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { addToast } from '../uiSlice'
 import BasicToast from 'src/views/notifications/toasts/BasicToast'
-import { getUserFromLocalStorage, addUserToLocalStorage } from 'src/utils/localStorage'
+
 const initialState = {
   isLoading: false,
   name: '',
@@ -31,8 +31,6 @@ const userSlice = createSlice({
       return { ...initialState, isEditing: state.isEditing }
     },
     handleChangeInput: (state, { payload }) => {
-      console.log(payload)
-      console.log(state)
       return { ...state, ...payload }
     },
   },
@@ -41,8 +39,6 @@ const userSlice = createSlice({
       state.isLoading = true
     },
     [signupUser.fulfilled]: (state) => {
-      // state.isLoading = false
-      console.log(state)
       return { ...initialState }
     },
   },
