@@ -72,7 +72,7 @@ const Charts = () => {
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={3}>
         <CCard className="mb-4">
           <CCardHeader>Doughnut Chart</CCardHeader>
           <CCardBody>
@@ -82,7 +82,7 @@ const Charts = () => {
                 datasets: [
                   {
                     backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                    data: [40, 20, 80, 10],
+                    data: [100, 20, 80, 10],
                   },
                 ],
               }}
@@ -90,7 +90,7 @@ const Charts = () => {
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={3}>
         <CCard className="mb-4">
           <CCardHeader>Pie Chart</CCardHeader>
           <CCardBody>

@@ -4,10 +4,7 @@ import { useState } from 'react'
 import { usersList, updateCurrentPage, setAddMMorePage } from 'src/features/users/usersSlice'
 import Pagination from 'react-pagination-js'
 import 'react-pagination-js/dist/styles.css' // import css
-import StatusEditModal from './StatusEditModal'
 import { showModal } from 'src/features/uiSlice'
-import EditPassModal from './EditPassModal'
-import AddUserForm from './AddUserForm'
 import {
   CCard,
   CCardBody,
@@ -30,56 +27,58 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilPeople, cilOptions, cilPlus } from '@coreui/icons'
 
-const Users = () => {
-  const dispatch = useDispatch()
-  // search field
-  const [searchName, setSearchName] = useState('')
-  const handleChangeSearchName = (e) => {
-    setSearchName(e.target.value)
-    dispatch(setAddMMorePage(true))
-    dispatch(updateCurrentPage(1))
-  }
-  // ////////////
+const users = [
+  {
+    name: 'my xuoi',
+    email: 'xuoi@gmail.com',
+    profilePicUrl:
+      'https://images.unsplash.com/photo-1555921015-5532091f6026?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+    roles: [
+      {
+        code: 'GUEST',
+      },
+    ],
+  },
+  {
+    name: 'my xuoi',
+    email: 'xuoi@gmail.com',
+    profilePicUrl:
+      'https://images.unsplash.com/photo-1555921015-5532091f6026?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+    roles: [
+      {
+        code: 'GUEST',
+      },
+    ],
+  },
+  {
+    name: 'my xuoi',
+    email: 'xuoi@gmail.com',
+    profilePicUrl:
+      'https://images.unsplash.com/photo-1555921015-5532091f6026?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+    roles: [
+      {
+        code: 'GUEST',
+      },
+    ],
+  },
+  {
+    name: 'my xuoi',
+    email: 'xuoi@gmail.com',
+    profilePicUrl:
+      'https://images.unsplash.com/photo-1555921015-5532091f6026?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+    roles: [
+      {
+        code: 'GUEST',
+      },
+    ],
+  },
+]
 
-  // Handle pagination
-  const { users, currentPage, totalSize, sizePerPage } = useSelector((store) => store.users)
-
-  const changeCurrentPage = (numPage) => {
-    dispatch(updateCurrentPage(numPage))
-  }
-
-  useEffect(() => {
-    dispatch(
-      usersList({
-        type: 'users',
-        limit: sizePerPage,
-        offset: sizePerPage * (currentPage - 1),
-        name: searchName,
-      }),
-    )
-  }, [currentPage, searchName])
-
+const CUsers = () => {
   return (
     <div>
       <div className="row-align ">
-        <h5 style={{ margin: '0' }}>Users Listing</h5>
-        <CButton
-          color="primary"
-          shape="rounded-pill"
-          variant="outline"
-          onClick={() =>
-            dispatch(
-              showModal({
-                title: `Add an account`,
-                modalContent: <AddUserForm />,
-                size: 'lg',
-              }),
-            )
-          }
-        >
-          <span className="margin-left">Create an account</span>
-          <CIcon icon={cilPlus} />
-        </CButton>
+        <h5 style={{ margin: '0' }}>Users</h5>
       </div>
       <CCard>
         <CCardBody style={{ overflowY: 'visible' }}>
@@ -91,8 +90,6 @@ const Users = () => {
                 name="searchName"
                 type="text"
                 id="inputSearchUser"
-                value={searchName}
-                onChange={handleChangeSearchName}
                 required
                 placeholder="Search by name"
               />
@@ -131,12 +128,8 @@ const Users = () => {
                   </CTableDataCell>
                   <CTableDataCell className="text-center">{user.roles[0].code}</CTableDataCell>
                   <CTableDataCell className="text-center">
-                    <CButton
-                      color={user.status ? 'success' : 'danger'}
-                      size="sm"
-                      style={{ cursor: 'auto' }}
-                    >
-                      {user.status ? 'Active' : 'Block'}
+                    <CButton color={'success'} size="sm" style={{ cursor: 'auto' }}>
+                      Active
                     </CButton>
                   </CTableDataCell>
                   <CTableDataCell className="text-center" style={{ cursor: 'pointer' }}>
@@ -145,35 +138,8 @@ const Users = () => {
                         <CIcon icon={cilOptions} />
                       </CDropdownToggle>
                       <CDropdownMenu>
-                        <CDropdownItem
-                          onClick={() =>
-                            dispatch(
-                              showModal({
-                                title: `Edit ${user.name} password`,
-                                modalContent: <EditPassModal id={user._id} />,
-                              }),
-                            )
-                          }
-                        >
-                          Edit password
-                        </CDropdownItem>
-                        <CDropdownItem
-                          onClick={() =>
-                            dispatch(
-                              showModal({
-                                title: 'Confirmation',
-                                modalContent: (
-                                  <StatusEditModal
-                                    id={user._id}
-                                    text={user.status ? 'block' : 'active'}
-                                  />
-                                ),
-                              }),
-                            )
-                          }
-                        >
-                          Edit Status
-                        </CDropdownItem>
+                        <CDropdownItem>Edit password</CDropdownItem>
+                        <CDropdownItem>Edit Status</CDropdownItem>
                       </CDropdownMenu>
                     </CDropdown>
                   </CTableDataCell>
@@ -182,19 +148,18 @@ const Users = () => {
             </CTableBody>
           </CTable>
           <div className="float-end margin-container">
-            <Pagination
+            {/* <Pagination
               currentPage={currentPage}
               totalSize={totalSize}
               theme="bootstrap"
               sizePerPage={sizePerPage}
               changeCurrentPage={changeCurrentPage}
               showFirstLastPages={true}
-            />
+            /> */}
           </div>
         </CCardBody>
       </CCard>
     </div>
   )
 }
-
-export default Users
+export default CUsers
