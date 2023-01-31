@@ -123,7 +123,14 @@ const Users = () => {
               {users?.map((user, index) => (
                 <CTableRow v-for="item in tableItems" key={index}>
                   <CTableDataCell className="text-center">
-                    <CAvatar size="md" src={user.profilePicUrl} />
+                    {/* <CAvatar size="md" src={user.profilePicUrl} /> */}
+                    <div className="avatar-container">
+                      <img
+                        src={user.profilePicUrl}
+                        alt=""
+                        style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+                      />
+                    </div>
                   </CTableDataCell>
                   <CTableDataCell>
                     <div>{user.name}</div>

@@ -5,6 +5,7 @@ import { usersList, updateCurrentPage, setAddMMorePage } from 'src/features/user
 import Pagination from 'react-pagination-js'
 import 'react-pagination-js/dist/styles.css' // import css
 import { showModal } from 'src/features/uiSlice'
+import SetToKolModal from './SetToKolModal'
 import {
   CCard,
   CCardBody,
@@ -26,7 +27,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPeople, cilOptions, cilPlus } from '@coreui/icons'
-
+import KolIcon from '../icons/everstarIcon/Kol'
 const users = [
   {
     name: 'my xuoi',
@@ -35,7 +36,7 @@ const users = [
       'https://images.unsplash.com/photo-1555921015-5532091f6026?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
     roles: [
       {
-        code: 'GUEST',
+        code: 'USER',
       },
     ],
   },
@@ -46,7 +47,7 @@ const users = [
       'https://images.unsplash.com/photo-1555921015-5532091f6026?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
     roles: [
       {
-        code: 'GUEST',
+        code: 'KOL',
       },
     ],
   },
@@ -57,7 +58,7 @@ const users = [
       'https://images.unsplash.com/photo-1555921015-5532091f6026?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
     roles: [
       {
-        code: 'GUEST',
+        code: 'USER',
       },
     ],
   },
@@ -68,13 +69,14 @@ const users = [
       'https://images.unsplash.com/photo-1555921015-5532091f6026?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
     roles: [
       {
-        code: 'GUEST',
+        code: 'USER',
       },
     ],
   },
 ]
 
 const CUsers = () => {
+  const dispatch = useDispatch()
   return (
     <div>
       <div className="row-align ">
@@ -108,7 +110,7 @@ const CUsers = () => {
                   <CIcon icon={cilPeople} />
                 </CTableHeaderCell>
                 <CTableHeaderCell>User</CTableHeaderCell>
-                <CTableHeaderCell className="text-center">Role</CTableHeaderCell>
+                <CTableHeaderCell className="text-center">Title</CTableHeaderCell>
                 {/* <CTableHeaderCell>Country</CTableHeaderCell>
                 <CTableHeaderCell className="text-center">Price</CTableHeaderCell> */}
                 <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
@@ -119,11 +121,21 @@ const CUsers = () => {
             <CTableBody>
               {users?.map((user, index) => (
                 <CTableRow v-for="item in tableItems" key={index}>
-                  <CTableDataCell className="text-center">
-                    <CAvatar size="md" src={user.profilePicUrl} />
+                  <CTableDataCell className="item-center">
+                    {/* <CAvatar size="md" src={user.profilePicUrl} /> */}
+                    {/* // style={{ backgroundImage: `url(${user.profilePicUrl})` }} */}
+                    <div className="avatar-container">
+                      <img
+                        src={user.profilePicUrl}
+                        alt=""
+                        style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                      />
+                    </div>
                   </CTableDataCell>
                   <CTableDataCell>
-                    <div>{user.name}</div>
+                    <div>
+                      {user.name} {user.roles[0].code === 'KOL' ? <KolIcon /> : ''}
+                    </div>
                     <div className="small text-medium-emphasis">{user.email}</div>
                   </CTableDataCell>
                   <CTableDataCell className="text-center">{user.roles[0].code}</CTableDataCell>
@@ -140,6 +152,18 @@ const CUsers = () => {
                       <CDropdownMenu>
                         <CDropdownItem>Edit password</CDropdownItem>
                         <CDropdownItem>Edit Status</CDropdownItem>
+                        <CDropdownItem
+                          onClick={() => {
+                            dispatch(
+                              showModal({
+                                title: `Set ${user.name} to be Kol`,
+                                modalContent: <SetToKolModal />,
+                              }),
+                            )
+                          }}
+                        >
+                          set to Kol
+                        </CDropdownItem>
                       </CDropdownMenu>
                     </CDropdown>
                   </CTableDataCell>

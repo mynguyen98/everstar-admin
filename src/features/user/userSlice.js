@@ -1,8 +1,6 @@
-import customFetch from 'src/utils/axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { addToast } from '../uiSlice'
-import BasicToast from 'src/views/notifications/toasts/BasicToast'
 
+import { signupUserThunk } from './userThunk'
 const initialState = {
   isLoading: false,
   name: '',
@@ -13,15 +11,7 @@ const initialState = {
   isEditing: false,
 }
 
-export const signupUser = createAsyncThunk('auth/signupUser', async (user, thunkAPI) => {
-  try {
-    await customFetch.post('/signup/basic', user)
-    thunkAPI.dispatch(addToast(BasicToast('#2eb85c', 'Register success')))
-  } catch (error) {
-    const msg = error.response.data.message
-    thunkAPI.dispatch(addToast(BasicToast('#e55353', msg)))
-  }
-})
+export const signupUser = createAsyncThunk('auth/signupUser', signupUserThunk)
 
 const userSlice = createSlice({
   name: 'user',

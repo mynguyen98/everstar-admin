@@ -53,3 +53,17 @@ $sidebar-brand-bg: rgba(188, 123, 179, 1);
 .margin-left {
   margin-right: 10px;
 }
+.avatar-container {
+  border-radius: 50%;
+  // background-position: center;
+  // background-size: contain;
+}
+.avatar-container img {
+  width: 100%;
+  border-radius: 50%;
+}
+.item-center {
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+}
