@@ -1,5 +1,6 @@
 import React from 'react'
 import { CCard, CCardBody, CCol, CCardHeader, CRow } from '@coreui/react'
+import { useSelector } from 'react-redux'
 import {
   CChartBar,
   CChartDoughnut,
@@ -12,7 +13,7 @@ import { DocsCallout } from 'src/components'
 
 const Charts = () => {
   const random = () => Math.round(Math.random() * 100)
-
+  const { ccusersAndroid, ccusersIos } = useSelector((store) => store.cusers.ccusers)
   return (
     <CRow>
       <CCol xs={12}>
@@ -44,7 +45,7 @@ const Charts = () => {
       </CCol>
       <CCol xs={6}>
         <CCard className="mb-4">
-          <CCardHeader>Line Chart</CCardHeader>
+          <CCardHeader>Chart line</CCardHeader>
           <CCardBody>
             <CChartLine
               data={{
@@ -56,7 +57,7 @@ const Charts = () => {
                     borderColor: 'rgba(220, 220, 220, 1)',
                     pointBackgroundColor: 'rgba(220, 220, 220, 1)',
                     pointBorderColor: '#fff',
-                    data: [random(), random(), random(), random(), random(), random(), random()],
+                    data: ccusersAndroid,
                   },
                   {
                     label: 'My Second dataset',
@@ -64,9 +65,12 @@ const Charts = () => {
                     borderColor: 'rgba(151, 187, 205, 1)',
                     pointBackgroundColor: 'rgba(151, 187, 205, 1)',
                     pointBorderColor: '#fff',
-                    data: [random(), random(), random(), random(), random(), random(), random()],
+                    data: ccusersIos,
                   },
                 ],
+              }}
+              options={{
+                animation: false,
               }}
             />
           </CCardBody>
@@ -82,7 +86,7 @@ const Charts = () => {
                 datasets: [
                   {
                     backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                    data: [100, 20, 80, 10],
+                    data: [1, 1, 1, 1],
                   },
                 ],
               }}

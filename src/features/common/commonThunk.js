@@ -1,24 +1,25 @@
-import { setAddMMorePage, updateTotalSize } from '../users/usersSlice'
-import customFetch from 'src/utils/axios'
-// thunk for pagination
-export const usersListThunk = async ({ type, name, limit, offset }, thunkAPI) => {
+import { customFetch, customFetch2 } from 'src/utils/axios'
+
+export const listItemThunk = async ({ email, name, isBanned, isKol, limit, offset }) => {
+  try {
+    const response = await customFetch2.get(
+      `/auth/admin/v1/user?${email ? `email=${email}` : ''}${name ? `&search=${name}` : ''}${
+        isBanned ? `&banned=${isBanned}` : ''
+      }${isKol ? `&kol=${isKol}` : ''}&limit=${limit}&offset=${offset > 0 ? offset : 0}`,
+    )
+    const cusers = response.data.data
+    return cusers
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const usersListThunk = async ({ type, name, limit, offset }) => {
   try {
     const response = await customFetch.get(
       `/${type}?search=${name}&limit=${limit}&offset=${offset}`,
     )
-    const { addMorePage, currentPage, totalSize, sizePerPage } = thunkAPI.getState().users
     const users = response.data.data
-    if (addMorePage && totalSize / sizePerPage === currentPage && users.length === sizePerPage) {
-      thunkAPI.dispatch(updateTotalSize('update'))
-    }
-    if (users.length < sizePerPage) {
-      thunkAPI.dispatch(updateTotalSize('truncate'))
-      // if there is no user, not add more page anymore and reduce one page
-      if (users.length === 0) {
-        thunkAPI.dispatch(setAddMMorePage(false))
-        thunkAPI.dispatch(updateTotalSize('reduce'))
-      }
-    }
     return users
   } catch (error) {}
 }

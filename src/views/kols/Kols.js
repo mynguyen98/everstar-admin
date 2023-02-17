@@ -1,10 +1,10 @@
 import React from 'react'
 import SearchForm from './SearchForm'
-import IdolsList from './IdolsList'
+import IdolsList from './KolsList'
 const Idols = () => {
   return (
     <div>
-      <SearchForm />
+      {/* <SearchForm /> */}
       <IdolsList />
     </div>
   )

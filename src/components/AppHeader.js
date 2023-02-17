@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleSidebar } from 'src/features/uiSlice'
+import LogoCenter from 'src/assets/brand/LogoCenter'
 import {
   CContainer,
   CHeader,
@@ -21,16 +22,20 @@ import { logo } from 'src/assets/brand/logo'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
-  // const sidebarShow = useSelector((state) => state.ui.sidebarShow)
+  // const sidebarShow = useSelector((state) => state.ui.sidebarShow)s
   const { headerNav } = useSelector((state) => state.auth.decentralized)
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
-        <CHeaderToggler className="ps-1" onClick={() => dispatch(toggleSidebar())}>
+        <CHeaderToggler
+          className="ps-1"
+          onClick={() => dispatch(toggleSidebar())}
+          style={{ zIndex: '10' }}
+        >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <CIcon icon={logo} height={48} alt="Logo" />
+          <LogoCenter />
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>

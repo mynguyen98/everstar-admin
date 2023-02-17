@@ -120,7 +120,7 @@ const Login = () => {
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Wellcome</h2>
+                    <h2>Welcome</h2>
                     <p>to Everstar Global admin</p>
                     {/* <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>

@@ -1,7 +1,6 @@
-// import customFetch from 'src/utils/axios'
+import customFetch from 'src/utils/axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-// import { addToast } from '../uiSlice'
-// import BasicToast from 'src/views/notifications/toasts/BasicToast'
+import { extraReducerList } from '../common/commonReducers'
 import { usersPaginationReducers } from '../common/commonReducers'
 import { usersListThunk } from '../common/commonThunk'
 import { toggleUsersStatusThunk, updateUsersPwThunk } from './usersThunk'
@@ -35,15 +34,11 @@ const usersSlice = createSlice({
     },
   },
   extraReducers: {
-    [usersList.pending]: (state) => {
-      state.isLoading = false
-    },
-    [usersList.fulfilled]: (state, { payload }) => {
-      state.isLoading = true
-      state.users = payload
-    },
+    ...extraReducerList(usersList, 'users'),
   },
 })
 export const { updateCurrentPage, updateTotalSize, setUserStatus, setAddMMorePage } =
   usersSlice.actions
+export const usersPaginateControl = usersSlice.actions
+
 export default usersSlice.reducer

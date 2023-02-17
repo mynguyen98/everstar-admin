@@ -1,5 +1,5 @@
 import { addToast } from '../uiSlice'
-import customFetch from 'src/utils/axios'
+import { customFetch } from 'src/utils/axios'
 import BasicToast from 'src/views/notifications/toasts/BasicToast'
 export const signupUserThunk = async (user, thunkAPI) => {
   try {

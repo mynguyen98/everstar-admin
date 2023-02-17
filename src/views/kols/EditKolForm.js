@@ -11,8 +11,8 @@ import {
   CFormInput,
   CButton,
 } from '@coreui/react'
-const EditIdolForm = () => {
-  const { name, email, title, country, price, address } = useSelector((store) => store.idol)
+const EditKolForm = () => {
+  const { name, email, title, country, price, address } = useSelector((store) => store.kols)
   return (
     <div>
       <CCard>
@@ -49,4 +49,4 @@ const EditIdolForm = () => {
   )
 }
 
-export default EditIdolForm
+export default EditKolForm

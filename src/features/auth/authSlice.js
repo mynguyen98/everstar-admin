@@ -1,4 +1,4 @@
-import customFetch from 'src/utils/axios'
+import { customFetch } from 'src/utils/axios'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { addToast } from '../uiSlice'
 import BasicToast from 'src/views/notifications/toasts/BasicToast'

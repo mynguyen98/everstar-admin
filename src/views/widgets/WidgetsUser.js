@@ -19,11 +19,26 @@ import {
   cilUser,
   cilUserFollow,
 } from '@coreui/icons'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { concurrentUser } from 'src/features/cusers/cusersSlice'
+import { useState, useEffect } from 'react'
 const WidgetsUser = () => {
+  const dispatch = useDispatch()
+  // const [ccusers, setCCusers] = useState({})
+  // const { ccusersAndroid, ccusersIos } = useSelector((store) => store.cusers.ccusers)
+  // setInterval(() => {
+  //   dispatch(concurrentUser({ version: '' }))
+  // }, 10000)
+
+  // get active user
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     dispatch(concurrentUser({ version: '' }))
+  //   }, 5000)
+  // }, [])
   return (
     <CRow>
-      <CCol sm={4} lg={4}>
+      <CCol sm={3} lg={3}>
         <CWidgetStatsC
           color="info"
           icon={<CIcon icon={cilPeople} height={36} />}
@@ -34,18 +49,30 @@ const WidgetsUser = () => {
           className="mb-4"
         />
       </CCol>
-      <CCol sm={4} lg={4}>
+      <CCol sm={3} lg={3}>
         <CWidgetStatsC
           color="success"
           icon={<CIcon icon={cilUser} height={36} />}
-          value="500"
-          title="Users active"
+          value="1"
+          title="Users active android"
           inverse
           progress={{ value: 100 }}
           className="mb-4"
         />
       </CCol>
-      <CCol sm={4} lg={4}>
+      <CCol sm={3} lg={3}>
+        <CWidgetStatsC
+          color="primary"
+          icon={<CIcon icon={cilUser} height={36} />}
+          // value={`${ccusersIos}`}
+          value="1"
+          title="Users active ios"
+          inverse
+          progress={{ value: 100 }}
+          className="mb-4"
+        />
+      </CCol>
+      <CCol sm={3} lg={3}>
         <CWidgetStatsC
           color="warning"
           icon={<CIcon icon={cilUserFollow} height={36} />}

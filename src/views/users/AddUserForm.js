@@ -14,29 +14,7 @@ import { showModal } from 'src/features/uiSlice'
 import EditPassModal from './EditPassModal'
 import Menu from '../menus/Menu'
 import UserModifiedMenu from './UserModifiedMenu'
-import {
-  CCard,
-  CCardBody,
-  CCol,
-  CRow,
-  CAvatar,
-  CForm,
-  CFormLabel,
-  CFormInput,
-  CButton,
-  CFormSelect,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-  CTable,
-  CTableBody,
-  CPopover,
-  CDropdown,
-  CDropdownToggle,
-  CDropdownMenu,
-  CDropdownItem,
-} from '@coreui/react'
+import { CCard, CCardBody, CCol, CRow, CForm, CFormLabel, CFormInput, CButton } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPeople, cilOptions, cilPlus } from '@coreui/icons'
 const AddUserForm = () => {

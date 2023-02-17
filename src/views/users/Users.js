@@ -8,6 +8,7 @@ import StatusEditModal from './StatusEditModal'
 import { showModal } from 'src/features/uiSlice'
 import EditPassModal from './EditPassModal'
 import AddUserForm from './AddUserForm'
+import NoSearchFound from '../myui/NoSearchFound'
 import {
   CCard,
   CCardBody,
@@ -119,12 +120,13 @@ const Users = () => {
                 <CTableHeaderCell className="text-center">More</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
+
             <CTableBody>
               {users?.map((user, index) => (
                 <CTableRow v-for="item in tableItems" key={index}>
                   <CTableDataCell className="text-center">
                     {/* <CAvatar size="md" src={user.profilePicUrl} /> */}
-                    <div className="avatar-container">
+                    <div className="avatar-container center-element">
                       <img
                         src={user.profilePicUrl}
                         alt=""
@@ -188,16 +190,21 @@ const Users = () => {
               ))}
             </CTableBody>
           </CTable>
-          <div className="float-end margin-container">
-            <Pagination
-              currentPage={currentPage}
-              totalSize={totalSize}
-              theme="bootstrap"
-              sizePerPage={sizePerPage}
-              changeCurrentPage={changeCurrentPage}
-              showFirstLastPages={true}
-            />
-          </div>
+          {users.length === 0 ? <NoSearchFound title="users" /> : ''}
+          {totalSize > sizePerPage ? (
+            <div className="float-end margin-container">
+              <Pagination
+                currentPage={currentPage}
+                totalSize={totalSize}
+                theme="bootstrap"
+                sizePerPage={sizePerPage}
+                changeCurrentPage={changeCurrentPage}
+                showFirstLastPages={true}
+              />
+            </div>
+          ) : (
+            ''
+          )}
         </CCardBody>
       </CCard>
     </div>
