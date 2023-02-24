@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { showModal, showModal2 } from 'src/features/uiSlice'
-import { createSub } from 'src/features/subs/subsSlice'
+import { createSub } from 'src/features/subs/subsModalSlice'
+// import { createSub } from 'src/features/subs/createSlice'
 import {
   CCard,
   CCardBody,

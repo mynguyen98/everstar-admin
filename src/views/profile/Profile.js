@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { updateProfile } from 'src/features/auth/authSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import { AppBreadcrumb } from 'src/components'
+import { getBinaryFromFile } from 'src/utils/resource'
 import {
   CCard,
   CCardBody,
@@ -15,6 +17,7 @@ import {
 
 const Profile = () => {
   const dispatch = useDispatch()
+  const [imageFile, setImageFile] = useState([])
   const { user } = useSelector((store) => {
     return store.auth.user
   })
@@ -24,9 +27,20 @@ const Profile = () => {
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
+    if (name === 'profilePicUrl') {
+      console.log(e.target.files)
+      setImageFile([...e.target.files])
+      return
+    }
     setValues({ ...values, [name]: value })
   }
-
+  useEffect(() => {
+    const imagesBinary = async () => {
+      const imagesBinary = await getBinaryFromFile(imageFile)
+      setValues({ ...values, profilePicUrl: imagesBinary[0] })
+    }
+    imagesBinary()
+  }, [imageFile])
   const handleSubmit = (e) => {
     e.preventDefault()
     const { name, profilePicUrl } = values
@@ -35,9 +49,10 @@ const Profile = () => {
     }
     dispatch(updateProfile({ name, profilePicUrl }))
   }
-
+  console.log(values)
   return (
     <>
+      <AppBreadcrumb />
       <CCard className="profile-container">
         <CCardBody>
           <CRow className="profile-heading">
@@ -69,13 +84,28 @@ const Profile = () => {
                 required
               />
             </CCol>
-            <CCol md={12}>
+            {/* <CCol md={12}>
               <CFormLabel htmlFor="profilePicUrlUser">Profile picture</CFormLabel>
               <CFormInput
                 name="profilePicUrl"
                 type="text"
                 id="profilePicUrlUser"
                 placeholder="input profile picture"
+                onChange={handleChange}
+                required
+              />
+            </CCol> */}
+            <CCol
+              md={12}
+              className="main-border"
+              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+            >
+              <CFormLabel htmlFor="profilePicUrlUser">Choose profile image</CFormLabel>
+              <CFormInput
+                type="file"
+                id="profilePicUrlUser"
+                // value={kol.images[0]}
+                name="profilePicUrl"
                 onChange={handleChange}
                 required
               />

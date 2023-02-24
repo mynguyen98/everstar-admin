@@ -1,6 +1,7 @@
 import { customFetch, customFetch2 } from 'src/utils/axios'
 
 export const listItemThunk = async ({ email, name, isBanned, isKol, limit, offset }) => {
+  console.log(email)
   try {
     const response = await customFetch2.get(
       `/auth/admin/v1/user?${email ? `email=${email}` : ''}${name ? `&search=${name}` : ''}${

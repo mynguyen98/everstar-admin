@@ -6,6 +6,7 @@ import SubsListing from './SubsListing'
 import CKolsListing from './CKolsListing'
 import { createKol } from 'src/features/kols/kolsSlice'
 import { getImageLink } from 'src/utils/resource'
+import { getBinaryFromFile } from 'src/utils/resource'
 import {
   CCard,
   CCardBody,
@@ -32,7 +33,7 @@ const initialState = {
   rank: '',
   order: 0,
   subscriptionId: '',
-  status: false,
+  status: true,
   intro: '',
 }
 
@@ -49,7 +50,7 @@ const CreateKolForm = () => {
     const name = e.target.name
     let value
     if (name === 'status') {
-      value = Boolean(e.target.value)
+      value = e.target.value === 'true'
     } else if (name === 'order') {
       value = Number(e.target.value)
     } else {
@@ -60,20 +61,6 @@ const CreateKolForm = () => {
       const value = e.target.files
       const files = [...value]
       setListingFile(files)
-      // const reader = new FileReader()
-      // reader.onload = function (e) {
-      //   // binary data
-      //   console.log(e.target.result)
-      //   setFormData((prev) => prev.append('images', e.target.result))
-      //   // formData.append('image', e.target.result)
-      // }
-      // reader.onerror = function (e) {
-      //   // error occurred
-      //   console.log('Error : ' + e.type)
-      // }
-      // files.forEach((item, index) => {
-      //   reader.readAsBinaryString(item)
-      // })
     } else {
       setKol({ ...kol, [name]: value })
     }
@@ -87,10 +74,11 @@ const CreateKolForm = () => {
 
   //handle get images link
   useEffect(() => {
-    const imagesList = listingFile.map((item) => {
-      return item.base64
-    })
-    setKol({ ...kol, images: imagesList })
+    const imagesBinary = async () => {
+      const imagesBinary = await getBinaryFromFile(listingFile)
+      setKol({ ...kol, images: imagesBinary })
+    }
+    imagesBinary()
   }, [listingFile])
   //handle get images link
 
@@ -98,11 +86,13 @@ const CreateKolForm = () => {
     if (!nearlyCreatedSubId) return
     setKol({ ...kol, subscriptionId: nearlyCreatedSubId })
   }, [nearlyCreatedSubId])
+
+  // handle submit KOL
   const onSubmitKol = (e) => {
     e.preventDefault()
     dispatch(createKol(kol))
   }
-  console.log(listingFile)
+  console.log(kol)
 
   return (
     <div>
@@ -136,7 +126,7 @@ const CreateKolForm = () => {
               className="main-border"
               style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
             >
-              <CFormLabel htmlFor="inputKolImages">Input image url</CFormLabel>
+              <CFormLabel htmlFor="inputKolImages">Choose images</CFormLabel>
               <CFormInput
                 type="file"
                 id="inputKolImages"

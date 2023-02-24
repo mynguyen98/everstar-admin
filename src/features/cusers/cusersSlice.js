@@ -8,6 +8,15 @@ import BasicToast from 'src/views/notifications/toasts/BasicToast'
 import { extraReducerList } from '../common/commonReducers'
 const initialState = {
   cusers: [],
+  cuserDetail: {
+    isLoading: true,
+    cuser: null,
+  },
+  columnsControl: {
+    userId: true,
+    userName: true,
+    status: true,
+  },
   currentPage: 1,
   totalSize: 40,
   sizePerPage: 10,
@@ -45,6 +54,7 @@ export const concurrentUser = createAsyncThunk(
 )
 export const cusersList = createAsyncThunk('cusers/cusersList', listItemThunk)
 
+export const getSpecificCuser = createAsyncThunk('cusers/getSpecificCuser', listItemThunk)
 export const CuserToKol = createAsyncThunk('cusers/setCuserToKol', async (userId, thunkAPI) => {
   try {
     const res = await customFetch2.patch(`/auth/admin/v1/user/set-kol/${userId}`)
@@ -93,6 +103,17 @@ const cusersSlice = createSlice({
         }
       })
     },
+    setColumnsControl: (state, { payload }) => {
+      const { name, value } = payload
+      state.columnsControl[name] = value
+    },
+    // Update user detail profile
+    updateCuserDetail: (state, { payload }) => {
+      state.cuserDetail.cuser.banned = payload
+    },
+    cuserDetailToKol: (state, { payload }) => {
+      state.cuserDetail.cuser.kol = payload
+    },
   },
   extraReducers: {
     [concurrentUser.fulfilled]: (state, { payload }) => {
@@ -112,10 +133,26 @@ const cusersSlice = createSlice({
         state.ccusers.labels.unshift(payload.moment)
       }
     },
+    [getSpecificCuser.pending]: (state) => {
+      state.cuserDetail.isLoading = true
+    },
+    [getSpecificCuser.fulfilled]: (state, { payload }) => {
+      console.log(payload)
+      state.cuserDetail.cuser = payload[0]
+      state.cuserDetail.isLoading = false
+    },
     ...extraReducerList(cusersList, 'cusers'),
   },
 })
-export const { updateCurrentPage, updateTotalSize, setAddMMorePage, bannedCuser, setCuserToKol } =
-  cusersSlice.actions
+export const {
+  updateCurrentPage,
+  updateTotalSize,
+  setAddMMorePage,
+  bannedCuser,
+  setCuserToKol,
+  setColumnsControl,
+  updateCuserDetail,
+  cuserDetailToKol,
+} = cusersSlice.actions
 
 export default cusersSlice.reducer

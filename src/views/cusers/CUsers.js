@@ -8,7 +8,13 @@ import { showModal } from 'src/features/uiSlice'
 import SetToKolModal from './SetToKolModal'
 import ToggleBannedCuser from './ToggleBannedCuser'
 import NoSearchFound from '../myui/NoSearchFound'
+import FilterHideShowCtable from '../myui/FilterHideShowCtable'
+import FilterCtable from './FilterCtable'
+import { AppBreadcrumb } from 'src/components'
+import { Link } from 'react-router-dom'
+import { avatarLink } from 'src/utils/helpers'
 import {
+  CContainer,
   CCard,
   CCardBody,
   CCol,
@@ -46,6 +52,8 @@ const initialSearchFields = {
 }
 const CUsers = () => {
   const dispatch = useDispatch()
+  const columnsControl = useSelector((store) => store.cusers.columnsControl)
+  const { userId, userName, status } = columnsControl
   const [searchFields, setSearchFields] = useState(initialSearchFields)
   const { isLoading, cusers, currentPage, totalSize, sizePerPage } = useSelector(
     (store) => store.cusers,
@@ -91,6 +99,7 @@ const CUsers = () => {
   console.log(searchFields)
   return (
     <div>
+      <AppBreadcrumb />
       <div className="row-align ">
         <h5 style={{ margin: '0' }}>Users</h5>
       </div>
@@ -183,6 +192,7 @@ const CUsers = () => {
               </CAccordionBody>
             </CAccordionItem>
           </CAccordion>
+          <FilterHideShowCtable content={<FilterCtable />} />
           <CTable
             align="middle"
             className="mb-0 border margin-item"
@@ -196,11 +206,11 @@ const CUsers = () => {
                   <CIcon icon={cilPeople} />
                 </CTableHeaderCell>
                 <CTableHeaderCell>User</CTableHeaderCell>
-                <CTableHeaderCell className="text-center">UserId</CTableHeaderCell>
+                {userId && <CTableHeaderCell className="text-center">UserId</CTableHeaderCell>}
 
-                <CTableHeaderCell className="text-center">User name</CTableHeaderCell>
+                {userName && <CTableHeaderCell className="text-center">User name</CTableHeaderCell>}
 
-                <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
+                {status && <CTableHeaderCell className="text-center">Status</CTableHeaderCell>}
 
                 <CTableHeaderCell className="text-center">More</CTableHeaderCell>
               </CTableRow>
@@ -214,30 +224,34 @@ const CUsers = () => {
                       {/* // style={{ backgroundImage: `url(${user.profilePicUrl})` }} */}
                       <div className="avatar-container center-element">
                         <img
-                          src={user.avatarURL}
-                          alt="avatar"
+                          src={user.avatarURL ? user.avatarURL : avatarLink(user.displayName)}
+                          alt="A"
                           style={{ width: '40px', height: '40px', objectFit: 'cover' }}
                         />
                       </div>
                     </CTableDataCell>
                     <CTableDataCell>
-                      <div>
+                      <Link to={`${user.email}`}>
                         {user.displayName} {user.kol ? <KolIcon /> : ''}
-                      </div>
+                      </Link>
                       <div className="small text-medium-emphasis">{user.email}</div>
                     </CTableDataCell>
-                    <CTableDataCell className="text-center">{user.id}</CTableDataCell>
+                    {userId && <CTableDataCell className="text-center">{user.id}</CTableDataCell>}
 
-                    <CTableDataCell className="text-center">{user.username}</CTableDataCell>
-                    <CTableDataCell className="text-center">
-                      <CButton
-                        color={user.banned ? 'danger' : 'success'}
-                        size="sm"
-                        style={{ cursor: 'auto' }}
-                      >
-                        {user.banned ? 'Banned' : 'Active'}
-                      </CButton>
-                    </CTableDataCell>
+                    {userName && (
+                      <CTableDataCell className="text-center">{user.username}</CTableDataCell>
+                    )}
+                    {status && (
+                      <CTableDataCell className="text-center">
+                        <CButton
+                          color={user.banned ? 'danger' : 'success'}
+                          size="sm"
+                          style={{ cursor: 'auto' }}
+                        >
+                          {user.banned ? 'Banned' : 'Active'}
+                        </CButton>
+                      </CTableDataCell>
+                    )}
                     <CTableDataCell className="text-center" style={{ cursor: 'pointer' }}>
                       <CDropdown>
                         <CDropdownToggle>

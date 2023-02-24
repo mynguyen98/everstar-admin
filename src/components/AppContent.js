@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { CContainer, CSpinner } from '@coreui/react'
+import CUserDetails from 'src/views/cusers/CUserDetails'
 
 // routes config
 import routes from '../routes'
@@ -23,6 +24,7 @@ const AppContent = () => {
               )
             )
           })}
+          <Route exact path="/cusers/:id" name="User Detail" element={<CUserDetails />}></Route>
           <Route path="/" element={<Navigate to="dashboard" replace />} />
         </Routes>
       </Suspense>

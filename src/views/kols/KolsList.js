@@ -14,7 +14,7 @@ import {
   updateCurrentPage,
   setAddMMorePage,
 } from 'src/features/kols/kolsSlice'
-import { listingSubs } from 'src/features/subs/subsSlice'
+import { listingSubs } from 'src/features/subs/subsModalSlice'
 import { formatCurrency } from 'src/utils/helpers'
 import {
   CAvatar,
@@ -91,7 +91,15 @@ const KolsList = () => {
                   {kols.map((item, index) => (
                     <CTableRow v-for="item in tableItems" key={index}>
                       <CTableDataCell className="text-center">
-                        <CAvatar size="md" src={item.images[0]} />
+                        {/* <CAvatar size="md" src={item.images[0]} /> */}
+                        {/* <div className="avatar-container text-center"> */}
+                        <img
+                          src={item.images[0]}
+                          className="avatar-container text-center"
+                          alt=""
+                          style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+                        />
+                        {/* </div> */}
                       </CTableDataCell>
                       <CTableDataCell>
                         <p>{item.name}</p>
@@ -101,35 +109,6 @@ const KolsList = () => {
                       <CTableDataCell className="text-center">
                         <p className="warning-color">{formatCurrency(item.subscriptionId.price)}</p>
                       </CTableDataCell>
-                      {/* <CTableDataCell>
-                        <p className="text-center">
-                          <CButton
-                            color="danger"
-                            size="sm"
-                            onClick={() => {
-                              dispatch(
-                                showModal({
-                                  title: 'Edit Kol information',
-                                  modalContent: <EditKolForm />,
-                                  size: 'xl',
-                                }),
-                              )
-                              dispatch(
-                                setEditKol({
-                                  name: item.user.name,
-                                  email: 'canhmy1998@gmail.com',
-                                  title: item.user.title,
-                                  country: item.country.name,
-                                  price: item.price,
-                                  address: 'abc district, cde city',
-                                }),
-                              )
-                            }}
-                          >
-                            Edit
-                          </CButton>
-                        </p>
-                      </CTableDataCell> */}
                     </CTableRow>
                   ))}
                 </CTableBody>

@@ -16,7 +16,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
 
-import { AppBreadcrumb } from './index'
+// import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 import { logo } from 'src/assets/brand/logo'
 
@@ -25,7 +25,7 @@ const AppHeader = () => {
   // const sidebarShow = useSelector((state) => state.ui.sidebarShow)s
   const { headerNav } = useSelector((state) => state.auth.decentralized)
   return (
-    <CHeader position="sticky" className="mb-4">
+    <CHeader position="sticky" className="mb-1">
       <CContainer fluid>
         <CHeaderToggler
           className="ps-1"
@@ -38,11 +38,11 @@ const AppHeader = () => {
           <LogoCenter />
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
-          <CNavItem>
+          {/* <CNavItem>
             <CNavLink to="/dashboard" component={NavLink}>
               Dashboard
             </CNavLink>
-          </CNavItem>
+          </CNavItem> */}
           {headerNav?.map((nav, index) => {
             return (
               <CNavItem key={index}>
@@ -57,31 +57,15 @@ const AppHeader = () => {
             <CNavLink href="#">Settings</CNavLink>
           </CNavItem> */}
         </CHeaderNav>
-        <CHeaderNav>
-          {/* <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilBell} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilList} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilEnvelopeOpen} size="lg" />
-            </CNavLink>
-          </CNavItem> */}
-        </CHeaderNav>
+        <CHeaderNav></CHeaderNav>
         <CHeaderNav className="ms-3">
           <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>
-      <CHeaderDivider />
-      <CContainer fluid>
+      {/* <CHeaderDivider /> */}
+      {/* <CContainer fluid>
         <AppBreadcrumb />
-      </CContainer>
+      </CContainer> */}
     </CHeader>
   )
 }

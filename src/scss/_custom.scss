@@ -124,6 +124,14 @@ $sidebar-brand-bg: rgba(188, 123, 179, 1);
   align-items: center;
 }
 
+// Profile details
+.avatar-detail {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
 // FOR GLOBAL CLASS
 .space-between {
 }
@@ -164,4 +172,35 @@ $sidebar-brand-bg: rgba(188, 123, 179, 1);
   border-left: none;
   border-top: none;
   border-bottom: none;
+}
+.dropdown-wrapper {
+  position: relative;
+  padding: 0 1rem;
+}
+.items-dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #c4c9d0;
+  list-style: none;
+  z-index: 10;
+  border-radius: 4px;
+  padding: 0;
+}
+.items-dropdown input {
+  margin-right: 4px;
+}
+.items-dropdown li {
+  padding: 0.125rem 0.75rem;
+  border-bottom: 1px solid #c4c9d0;
+}
+.items-dropdown li:last-child {
+  border-bottom: none;
+}
+.text-second {
+  color: #8a93a2;
+}
+.border-bottom {
+  border-bottom: 1px solid #c4c9d0;
 }

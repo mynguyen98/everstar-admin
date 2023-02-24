@@ -5,8 +5,9 @@ import kolSlice from './features/kols/kolsSlice'
 import userSlice from './features/user/userSlice'
 import usersSlice from './features/users/usersSlice'
 import cusersSlice from './features/cusers/cusersSlice'
-import subsSlice from './features/subs/subsSlice'
+import subsSlice from './features/subs/subsModalSlice'
 import ckolsSlice from './features/cusers/ckolsSlice'
+import subsPageSlice from './features/subs/subsPageSlice'
 const store = configureStore({
   reducer: {
     auth: authSlice,
@@ -17,6 +18,7 @@ const store = configureStore({
     cusers: cusersSlice,
     subs: subsSlice,
     ckols: ckolsSlice,
+    subsPage: subsPageSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

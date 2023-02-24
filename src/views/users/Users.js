@@ -9,6 +9,7 @@ import { showModal } from 'src/features/uiSlice'
 import EditPassModal from './EditPassModal'
 import AddUserForm from './AddUserForm'
 import NoSearchFound from '../myui/NoSearchFound'
+import { AppBreadcrumb } from 'src/components'
 import {
   CCard,
   CCardBody,
@@ -62,6 +63,7 @@ const Users = () => {
 
   return (
     <div>
+      <AppBreadcrumb />
       <div className="row-align ">
         <h5 style={{ margin: '0' }}>Users Listing</h5>
         <CButton

@@ -7,6 +7,8 @@ const Profile = React.lazy(() => import('./views/profile/Profile'))
 const Idols = React.lazy(() => import('./views/kols/Kols'))
 const Users = React.lazy(() => import('./views/users/Users'))
 const CUsers = React.lazy(() => import('./views/cusers/CUsers'))
+const Subs = React.lazy(() => import('./views/subs/Subs'))
+const HowToUse = React.lazy(() => import('./views/how-to-use/HowToUse'))
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -60,6 +62,8 @@ const routes = [
   { path: '/idols', name: 'Idols', element: Idols },
   { path: '/usersAdmin', name: 'Users Admin', element: Users },
   { path: '/cusers', name: 'Users', element: CUsers },
+  { path: '/subs', name: 'Subscriptions', element: Subs },
+  { path: '/how-to-use', name: 'How to use', element: HowToUse },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

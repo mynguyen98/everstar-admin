@@ -3,9 +3,11 @@ import { CForm, CModalFooter, CButton } from '@coreui/react'
 import { toggleBannedCuser } from 'src/features/cusers/cusersSlice'
 import { useDispatch } from 'react-redux'
 import { closeModal } from 'src/features/uiSlice'
-const ToggleBannedCuser = ({ name, id, isBanned }) => {
+import { updateCuserDetail } from 'src/features/cusers/cusersSlice'
+const ToggleBannedCuser = ({ name, id, isBanned, updateUserDetail }) => {
+  console.log(updateUserDetail)
   const dispatch = useDispatch()
-  console.log(id)
+
   return (
     <div>
       <CForm className="row g-3" style={{ marginBottom: '16px' }}>
@@ -15,12 +17,22 @@ const ToggleBannedCuser = ({ name, id, isBanned }) => {
         </span>
       </CForm>
       <CModalFooter>
-        <CButton color="secondary">Back</CButton>
+        <CButton
+          color="secondary"
+          onClick={() => {
+            dispatch(closeModal())
+          }}
+        >
+          Back
+        </CButton>
         <CButton
           color="primary"
           onClick={() => {
             dispatch(toggleBannedCuser(id))
             dispatch(closeModal())
+            if (updateUserDetail) {
+              dispatch(updateCuserDetail(!isBanned))
+            }
           }}
         >
           Yes

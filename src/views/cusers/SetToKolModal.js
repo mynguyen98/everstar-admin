@@ -2,7 +2,8 @@ import React from 'react'
 import { CForm, CModalFooter, CButton } from '@coreui/react'
 import { CuserToKol } from 'src/features/cusers/cusersSlice'
 import { useDispatch } from 'react-redux'
-const SetToKolModal = ({ name, id }) => {
+import { cuserDetailToKol } from 'src/features/cusers/cusersSlice'
+const SetToKolModal = ({ name, id, updateUserDetail, kol }) => {
   const dispatch = useDispatch()
   console.log(id)
   return (
@@ -14,7 +15,15 @@ const SetToKolModal = ({ name, id }) => {
       </CForm>
       <CModalFooter>
         <CButton color="secondary">Back</CButton>
-        <CButton color="primary" onClick={() => dispatch(CuserToKol(id))}>
+        <CButton
+          color="primary"
+          onClick={() => {
+            dispatch(CuserToKol(id))
+            if (updateUserDetail) {
+              dispatch(cuserDetailToKol(!kol))
+            }
+          }}
+        >
           Yes
         </CButton>
       </CModalFooter>
